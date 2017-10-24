@@ -19,7 +19,7 @@ public class UserMealsUtil {
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,10,0), "Завтрак", 500),
-                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,13,0), "Обед", 1000),
+                new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,11,0), "Обед", 1000),
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 30,20,0), "Ужин", 500),
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,10,0), "Завтрак", 1000),
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31,13,0), "Обед", 500),
@@ -46,12 +46,13 @@ public class UserMealsUtil {
             LocalDateTime localDateTime = LocalDateTime.of(date,time);
 
             int cal=0;
-            if (isBetween(time,startTime,endTime) )
+            if (TimeUtil.isBetween(time,startTime,endTime))
             {
-                for (int i = 0; i <mealList.size() ; i++) {
 
-                    if (mealList.get(i).getDateTime().toLocalDate().equals(date)) {
-                        cal+=mealList.get(i).getCalories();
+                for (UserMeal aMealList : mealList) {
+
+                    if (aMealList.getDateTime().toLocalDate().equals(date)) {
+                        cal += aMealList.getCalories();
                     }
                 }
                 if (cal<=caloriesPerDay) {
@@ -64,9 +65,5 @@ public class UserMealsUtil {
         }
 
         return result;
-    }
-
-    public static boolean isBetween(LocalTime candidate, LocalTime start, LocalTime end) {
-        return !candidate.isBefore(start) && !candidate.isAfter(end);
     }
 }

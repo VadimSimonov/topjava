@@ -28,8 +28,6 @@
                 <td><input name="exceed" value="${meal.get(id).exceed}"></td>
             </tr>
         </table>
-        <button type="submit">Сохранить</button>
-        <INPUT TYPE="button" VALUE="Отменить" onClick="history.go(-1);">
     </form>
         </c:when>
         <c:when test="${action=='add'}">

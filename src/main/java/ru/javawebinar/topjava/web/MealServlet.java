@@ -1,10 +1,8 @@
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
-import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +17,11 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 
 public class MealServlet extends HttpServlet {
-    private static final Logger LOG = getLogger(MealServlet.class);
+    private static Logger log = getLogger(MealServlet.class);
     List<MealWithExceed> list=MealsUtil.getMealsWithExceeded();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.debug("doGet MealServlet");
         String action = req.getParameter("action");
         if (action==null)
         {
@@ -39,9 +38,6 @@ public class MealServlet extends HttpServlet {
                 resp.sendRedirect("meal");
                 return;
             case "edit":
-                req.setAttribute("meal",list);
-                req.getRequestDispatcher("/edit.jsp").forward(req, resp);
-                break;
             case "add":
                 req.setAttribute("meal",list);
                 req.getRequestDispatcher("/edit.jsp").forward(req, resp);
@@ -51,6 +47,7 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.debug("doPost MealServlet");
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
         //String id = req.getParameter("id");

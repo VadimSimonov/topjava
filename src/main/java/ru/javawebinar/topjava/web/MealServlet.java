@@ -35,10 +35,14 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 String id = req.getParameter("id");
                 int i=Integer.parseInt(id);
-                list.remove(i-1);
+                list.remove(i);
                 resp.sendRedirect("meal");
                 return;
             case "edit":
+                req.setAttribute("meal",list);
+                req.getRequestDispatcher("/edit.jsp").forward(req, resp);
+                break;
+            case "add":
                 req.setAttribute("meal",list);
                 req.getRequestDispatcher("/edit.jsp").forward(req, resp);
                 break;
@@ -49,21 +53,25 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
-        String id = req.getParameter("id");
+        //String id = req.getParameter("id");
 
         switch (action)
         {
             case "edit":
+            case "add":
                 String date = req.getParameter("date");
                 String time = req.getParameter("time");
                 String str=date+" "+time;
-                //LocalDateTime startd = LocalDateTime.parse(date);
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
                 String description = req.getParameter("description");
                 String calories = req.getParameter("calories");
                 String exceed = req.getParameter("exceed");
-                list.add(Integer.parseInt(id),new MealWithExceed(dateTime,description,Integer.parseInt(calories),Boolean.parseBoolean(exceed)));
+                if (date==null || time==null || description==null || calories==null || exceed==null)
+                {
+                    resp.sendRedirect("meal");
+                }
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+                list.add(new MealWithExceed(dateTime,description,Integer.parseInt(calories),Boolean.parseBoolean(exceed)));
                 break;
         }
         resp.sendRedirect("meal");

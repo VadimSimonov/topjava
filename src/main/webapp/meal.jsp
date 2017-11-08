@@ -46,6 +46,7 @@
         </c:if>
     </c:forEach>
     </table>
+    <a class="button" href="meal?id=${id}&action=add">Add</a>
 </section>
 </body>
 </html>

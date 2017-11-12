@@ -1,12 +1,24 @@
 package ru.javawebinar.topjava.model;
 
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.*;
 
 import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
 public class User extends AbstractNamedEntity {
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    private Integer id;
 
     private String email;
 
@@ -32,6 +44,7 @@ public class User extends AbstractNamedEntity {
         this.enabled = enabled;
         this.roles = roles;
     }
+
 
     public String getEmail() {
         return email;

@@ -23,6 +23,10 @@ public class SpringMain {
 
             System.out.println(adminUserController.getAll().size());
 
+            adminUserController.update(new User(null, "newUser", "mail", "passw", Role.ROLE_USER),1);
+
+            System.out.println(adminUserController.getAll().size());
+
         }
     }
 }

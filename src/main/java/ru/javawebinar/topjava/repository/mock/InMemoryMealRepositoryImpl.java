@@ -1,15 +1,21 @@
 package ru.javawebinar.topjava.repository.mock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
+@Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
+    private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
     private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
@@ -40,7 +46,20 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public Collection<Meal> getAll() {
-        return repository.values();
+       // return new ArrayList<>(repository.values());
+        return repository.values().stream()
+                .sorted(Comparator.comparing(Meal::getTime).thenComparing(Meal::getDate))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Meal> getByUserId(int userid) {
+        log.info("getByUserId {}", userid);
+        List<Meal> list = repository.entrySet().stream()
+                .filter(entry -> userid==entry.getValue().getUserId())
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+        return list;
     }
 }
 

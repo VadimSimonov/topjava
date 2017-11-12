@@ -2,10 +2,14 @@ package ru.javawebinar.topjava;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +19,15 @@ public class SpringMain {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
+            MealRestController mealRestController = appCtx.getBean(MealRestController.class);
+
+           mealRestController.create(new Meal(null,3,LocalDateTime.of(2015, Month.APRIL, 30, 9, 0), "Завтрак", 500));
+            List<Meal> list=mealRestController.getAll();
+            for (Meal meal:list
+                    ) {
+                System.out.println(meal.getId() + " " + meal.getUserId() + " " + meal.getDate()+" "+meal.getDateTime()+ " " + meal.getDescription() + " " + meal.getCalories());
+            }
+/*
             adminUserController.create(new User(null, "userName3", "email3", "password3", Role.ROLE_USER));
             adminUserController.create(new User(null, "userName4", "email4", "password4", Role.ROLE_USER));
             adminUserController.create(new User(null, "userName5", "email5", "password5", Role.ROLE_USER));
@@ -42,6 +55,7 @@ public class SpringMain {
                 System.out.println(user.getId()+" "+user.getName()+" "+user.getEmail()+" "+user.getRoles()+" "+user.getPassword());
             }
             System.out.println(adminUserController.getByMail("email011"));
+*/
 
         }
     }

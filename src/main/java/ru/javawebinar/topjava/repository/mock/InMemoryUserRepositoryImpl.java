@@ -9,12 +9,12 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
+import static java.util.Map.Entry.comparingByValue;
 
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
@@ -25,7 +25,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
-        return true;
+        return repository.remove(id) != null;
     }
 
     @Override
@@ -41,18 +41,25 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User get(int id) {
         log.info("get {}", id);
-        return null;
+        return repository.get(id);
     }
 
     @Override
     public List<User> getAll() {
         log.info("getAll");
-        return new ArrayList<>(repository.values());
+        return repository.values().stream()
+                .sorted(Comparator.comparing(User::getName).thenComparing(User::getEmail))
+                .collect(Collectors.toList());
     }
 
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-        return null;
+        List<User> list = repository.entrySet().stream()
+                .filter(entry -> email.equals(entry.getValue().getEmail()))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+        return list.get(0);
+
     }
 }

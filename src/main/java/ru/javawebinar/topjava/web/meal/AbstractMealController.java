@@ -48,10 +48,10 @@ public abstract class AbstractMealController {
         service.update(meal);
     }
 
-    List<Meal> getByUserId(int userid)
+    public List<Meal> getByUserId(int userid)
     {
 
-        return null;
+        return service.getByUserId(userid);
     }
 
 

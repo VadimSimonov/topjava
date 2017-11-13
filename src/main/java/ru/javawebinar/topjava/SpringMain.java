@@ -18,15 +18,33 @@ public class SpringMain {
         // java 7 Automatic resource management
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-            AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
+           // AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
 
            mealRestController.create(new Meal(null,3,LocalDateTime.of(2015, Month.APRIL, 30, 9, 0), "Завтрак", 500));
+            System.out.println(mealRestController.getAll().size());
             List<Meal> list=mealRestController.getAll();
-            for (Meal meal:list
-                    ) {
+            for (Meal meal:list) {
                 System.out.println(meal.getId() + " " + meal.getUserId() + " " + meal.getDate()+" "+meal.getDateTime()+ " " + meal.getDescription() + " " + meal.getCalories());
             }
+
+            mealRestController.update(new Meal(null,3,LocalDateTime.of(2016, Month.JUNE, 20, 11, 0), "NewЗавтрак", 500),3);
+            System.out.println(mealRestController.getAll().size());
+            List<Meal> list1=mealRestController.getAll();
+            for (Meal meal:list1) {
+                System.out.println(meal.getId() + " " + meal.getUserId() + " " + meal.getDate()+" "+meal.getDateTime()+ " " + meal.getDescription() + " " + meal.getCalories());
+            }
+          //  mealRestController.delete(3);
+            System.out.println(mealRestController.getAll().size());
+            List<Meal> list2=mealRestController.getAll();
+            for (Meal meal:list2) {
+                System.out.println(meal.getId() + " " + meal.getUserId() + " " + meal.getDate()+" "+meal.getDateTime()+ " " + meal.getDescription() + " " + meal.getCalories());
+            }
+            List<Meal> list3 = mealRestController.getByUserId(2);
+            for (Meal meal :list3) {
+                System.out.println(meal.getId() + " " + meal.getUserId() + " " + meal.getDate()+" "+meal.getDateTime()+ " " + meal.getDescription() + " " + meal.getCalories());
+            }
+
 /*
             adminUserController.create(new User(null, "userName3", "email3", "password3", Role.ROLE_USER));
             adminUserController.create(new User(null, "userName4", "email4", "password4", Role.ROLE_USER));

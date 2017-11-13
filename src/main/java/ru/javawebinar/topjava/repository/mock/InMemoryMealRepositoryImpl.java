@@ -27,6 +27,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal save(Meal meal) {
+        log.info("save {}", meal);
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
         }
@@ -36,17 +37,20 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public void delete(int id) {
+        log.info("delete {}", id);
         repository.remove(id);
     }
 
     @Override
     public Meal get(int id) {
+        log.info("get {}", id);
         return repository.get(id);
     }
 
     @Override
     public Collection<Meal> getAll() {
        // return new ArrayList<>(repository.values());
+        log.info("getAll {}");
         return repository.values().stream()
                 .sorted(Comparator.comparing(Meal::getTime).thenComparing(Meal::getDate))
                 .collect(Collectors.toList());

@@ -8,8 +8,6 @@ import java.util.List;
 @Controller
 public class MealRestController extends AbstractMealController {
 
-   // private MealService service;
-
     @Override
     public List<Meal> getAll() {
         return super.getAll();
@@ -36,7 +34,7 @@ public class MealRestController extends AbstractMealController {
     }
 
     @Override
-    List<Meal> getByUserId(int userid) {
+    public List<Meal> getByUserId(int userid) {
         return super.getByUserId(userid);
     }
 

@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
+
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
@@ -17,6 +21,11 @@ public abstract class AbstractMealController {
 
     @Autowired
     private MealService service;
+
+    @Autowired
+    public AbstractMealController(MealService service) {
+        this.service = service;
+    }
 
     public List<Meal> getAll() {
         log.info("getAll");
@@ -48,6 +57,13 @@ public abstract class AbstractMealController {
     public List<Meal> getByUserId(int userid)
     {
         return service.getByUserId(userid);
+    }
+
+    public List<MealWithExceed> filterByDate(String startDate, String endDate, String startTime, String endTime) {
+        //log.info("filterByDate startDate {} endDate {} startTime {} endTime {}",startDate,endDate,startTime,endTime);
+        //service.filterByDate(startDate,endDate,startTime,endTime);
+
+        return null;
     }
 
 }

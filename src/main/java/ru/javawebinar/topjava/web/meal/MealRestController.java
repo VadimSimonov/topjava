@@ -1,42 +1,63 @@
 package ru.javawebinar.topjava.web.meal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealWithExceed;
+
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
+
 @Controller
-public class MealRestController extends AbstractMealController {
+public class MealRestController {
 
-    @Override
+    protected final Logger log = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private MealService service;
+
+
     public List<Meal> getAll() {
-        return super.getAll();
+        log.info("getAll");
+        return service.getAll();
     }
 
-    @Override
     public Meal get(int id) {
-        return super.get(id);
+        log.info("get {}", id);
+        return service.get(id);
     }
 
-    @Override
     public Meal create(Meal meal) {
-        return super.create(meal);
+        log.info("create {}", meal);
+        checkNew(meal);
+        return service.create(meal);
     }
 
-    @Override
     public void delete(int id) {
-        super.delete(id);
+        log.info("delete {}", id);
+        service.delete(id);
     }
 
-    @Override
     public void update(Meal meal, int id) {
-        super.update(meal, id);
+        log.info("update {} with id={}", meal, id);
+        assureIdConsistent(meal, id);
+        service.update(meal);
     }
 
-    @Override
-    public List<Meal> getByUserId(int userid) {
-        return super.getByUserId(userid);
+    public List<Meal> getByUserId(int userid)
+    {
+        return service.getByUserId(userid);
     }
 
+    public List<MealWithExceed> filterByDate(String startDate, String endDate, String startTime, String endTime) {
+        log.info("filterByDate startDate {} endDate {} startTime {} endTime {}",startDate,endDate,startTime,endTime);
+        service.filterByDate(startDate,endDate,startTime,endTime);
 
+        return null;
+    }
 }

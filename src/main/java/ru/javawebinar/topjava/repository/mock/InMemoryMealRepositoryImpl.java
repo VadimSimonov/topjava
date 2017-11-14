@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -63,6 +66,19 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
         return list;
+    }
+
+    @Override
+    public List<MealWithExceed> filterByDate(String startDate, String endDate, String startTime, String endTime) {
+        String sDate=startDate+" "+startTime;
+        String eDate=endDate+" "+endTime;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTimeStart = LocalDateTime.parse(sDate, formatter);
+        LocalDateTime dateTimeEnd = LocalDateTime.parse(eDate, formatter);
+
+
+
+        return null;
     }
 }
 

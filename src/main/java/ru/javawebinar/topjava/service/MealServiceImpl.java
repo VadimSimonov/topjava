@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.List;
@@ -51,6 +52,11 @@ public class MealServiceImpl implements MealService {
     @Override
     public List<Meal> getByUserId(int userid) {
         return repository.getByUserId(userid);
+    }
+
+    @Override
+    public List<MealWithExceed> filterByDate(String startDate, String endDate, String startTime, String endTime) {
+        return repository.filterByDate(startDate,endDate,startTime,endTime);
     }
 
     public void setRepository(MealRepository repository) {

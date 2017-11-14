@@ -19,6 +19,23 @@
 <body>
 <section>
     <h3><a href="index.html">Home</a></h3>
+    <h2>Filter</h2>
+    <form action="meals">
+        <input type="hidden" name="action" value="filter"/>
+        <label for="startDate">От даты </label>
+        <input type="date" id="startDate" name="startDate"/>
+        <label for="startTime">От времени </label>
+        <input type="time" id="startTime" name="startTime"/>
+        <label for="endDate">До даты </label>
+        <input type="date" id="endDate" name="endDate"/>
+        <label for="endTime">До времени </label>
+        <input type="time" id="endTime" name="endTime"/>
+        <input type="submit" src="filter.png" value="Фильтровать"/>
+        <a href="meals">
+            <button>Сбросить фильтр</button>
+        </a>
+    </form>
+    <hr>
     <h2>Meals</h2>
     <a href="meals?action=create">Add Meal</a>
     <hr/>

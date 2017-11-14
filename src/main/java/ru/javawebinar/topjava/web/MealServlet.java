@@ -2,10 +2,13 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
+import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,10 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
+    MealRestController mealRestController;
 
     private MealRepository repository;
 
@@ -61,6 +66,17 @@ public class MealServlet extends HttpServlet {
                         repository.get(getId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
+                break;
+            case "filter":
+                log.info("filter meal");
+                String startDate = request.getParameter("startDate");
+                String endDate=request.getParameter("endDate");
+                String startTime=request.getParameter("startTime");
+                String endTime=request.getParameter("endTime");
+
+                List<MealWithExceed>list = mealRestController.filterByDate(startDate,endDate,startTime,endTime);
+
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "all":
             default:

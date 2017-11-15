@@ -19,6 +19,6 @@ public interface MealService {
 
     List<Meal> getByUserId(int userid);
 
-    List<MealWithExceed> filterByDate(String startDate, String endDate, String startTime, String endTime);
+    List<Meal> filterByDate(List<Meal> klist, String startDate, String endDate, String startTime, String endTime);
 
 }

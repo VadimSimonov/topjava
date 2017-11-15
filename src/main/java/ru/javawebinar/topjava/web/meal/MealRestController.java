@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
-import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.util.List;
 
@@ -54,10 +53,8 @@ public class MealRestController {
         return service.getByUserId(userid);
     }
 
-    public List<MealWithExceed> filterByDate(String startDate, String endDate, String startTime, String endTime) {
+    public List<Meal> filterByDate(List<Meal> klist, String startDate, String endDate, String startTime, String endTime) {
         log.info("filterByDate startDate {} endDate {} startTime {} endTime {}",startDate,endDate,startTime,endTime);
-        service.filterByDate(startDate,endDate,startTime,endTime);
-
-        return null;
+        return service.filterByDate(klist,startDate,endDate,startTime,endTime);
     }
 }

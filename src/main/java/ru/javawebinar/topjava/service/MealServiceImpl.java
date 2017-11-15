@@ -8,8 +8,6 @@ import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
@@ -55,8 +53,8 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<MealWithExceed> filterByDate(String startDate, String endDate, String startTime, String endTime) {
-        return repository.filterByDate(startDate,endDate,startTime,endTime);
+    public List<Meal> filterByDate(List<Meal> klist, String startDate, String endDate, String startTime, String endTime) {
+        return repository.filterByDate(klist,startDate,endDate,startTime,endTime);
     }
 
     public void setRepository(MealRepository repository) {

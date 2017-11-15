@@ -73,10 +73,18 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public List<Meal> filterByDate(List<Meal> klist, String startDate, String endDate, String startTime, String endTime) {
         return klist.stream()
-                .filter(i -> DateTimeUtil.isBetweenDate(i.getDate(), LocalDate.parse(startDate), LocalDate.parse(endDate)))
-                .filter(i -> DateTimeUtil.isBetween(i.getTime(), LocalTime.parse(startTime), LocalTime.parse(endTime)))
+                .filter(i -> DateTimeUtil.isBetweenDate(i.getDate(),
+                        checkIfNull(startDate) ? LocalDate.MIN : LocalDate.parse(startDate),checkIfNull(endDate) ? LocalDate.MAX : LocalDate.parse(endDate)))
+                .filter(i -> DateTimeUtil.isBetween(i.getTime(),
+                        checkIfNull(startTime) ? LocalTime.MIN : LocalTime.parse(startTime), checkIfNull(endTime) ? LocalTime.MAX : LocalTime.parse(endTime)))
                 .collect(Collectors.toList());
 
     }
+
+    private boolean checkIfNull(String str)
+    {
+        return str==null || str.isEmpty();
+    }
+
 }
 

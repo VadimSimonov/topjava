@@ -5,14 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,15 +38,19 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public void delete(int id) {
+    public boolean delete(int id,int userId) {
         log.info("delete {}", id);
-        repository.remove(id);
+        if (repository!=null && repository.get(id).getUserId().equals(userId)) {
+            repository.remove(id);
+            return true;
+        } return false;
     }
 
     @Override
-    public Meal get(int id) {
-        log.info("get {}", id);
-        return repository.get(id);
+    public Meal get(int mealId, int userId) {
+        log.info("Get mealId {}, userId {}", mealId, userId);
+        Meal meal = repository.get(mealId);
+        return isValid(meal, userId) ? meal : null;
     }
 
     @Override
@@ -84,6 +84,10 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private boolean checkIfNull(String str)
     {
         return str==null || str.isEmpty();
+    }
+
+    private boolean isValid(Meal meal, Integer userId) {
+        return meal != null && meal.getUserId().equals(userId);
     }
 
 }

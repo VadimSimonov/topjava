@@ -56,7 +56,7 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
-                mealRestController.delete(id);
+                mealRestController.delete(id,AuthorizedUser.getId());
                 response.sendRedirect("meals");
                 break;
             case "create":

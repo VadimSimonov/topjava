@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 
@@ -28,7 +29,7 @@ public class MealRestController {
 
     public Meal get(int id) {
         log.info("get {}", id);
-        return service.get(id);
+        return service.get(id, AuthorizedUser.getId());
     }
 
     public Meal create(Meal meal) {
@@ -37,9 +38,9 @@ public class MealRestController {
         return service.create(meal);
     }
 
-    public void delete(int id) {
+    public void delete(int id, int userId) {
         log.info("delete {}", id);
-        service.delete(id);
+        service.delete(id,userId);
     }
 
     public void update(Meal meal, int id) {

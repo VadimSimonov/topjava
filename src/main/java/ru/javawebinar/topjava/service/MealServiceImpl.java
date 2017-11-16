@@ -27,7 +27,7 @@ public class MealServiceImpl implements MealService {
         MealRepository f = checkNotFoundWithId(repository, id);
         if (f!=null) {
             repository.delete(id);
-        }
+        }else
         throw new NotFoundException("delete not found id");
 
     }

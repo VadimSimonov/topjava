@@ -10,6 +10,6 @@ INSERT INTO users (name, email, password) VALUES
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001);
-INSERT INTO meals (data_time,description,calories,user_id) VALUES
+INSERT INTO meals (date_time,description,calories,user_id) VALUES
   ('2017-11-17 10:59:52', 'Обед',500,100000),
   ('2017-11-17 11:13:54', 'Ужин',200,100000);

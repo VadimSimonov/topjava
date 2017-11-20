@@ -1,16 +1,12 @@
 package ru.javawebinar.topjava;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class MealTestData {
 

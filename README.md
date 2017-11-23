@@ -1,3 +1,5 @@
+
+[![Dependency Status](https://www.versioneye.com/user/projects/5a16a0ad0fb24f212587285c/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5a16a0ad0fb24f212587285c)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/481809a5e0774229b4395d020dcc5b6e)](https://www.codacy.com/app/VadimSimonov/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=VadimSimonov/topjava&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/VadimSimonov/topjava.svg?branch=master)](https://travis-ci.org/VadimSimonov/topjava)
 

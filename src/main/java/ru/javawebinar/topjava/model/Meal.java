@@ -1,19 +1,42 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@Entity
+@Table(name = "meals",
+        uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id","date_time"},name = "meals_unique_user_datetime_idx")
+})
+
+@NamedQueries({
+        @NamedQuery(name = Meal.GET, query = "select m FROM Meal m WHERE m.id=:id and m.user.id=:user_id"),
+     //   @NamedQuery(name = Meal.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
+   //     @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
+})
+
 public class Meal extends AbstractBaseEntity {
+    public static final String GET = "Meal.get";
+    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
+    @DateTimeFormat
+    @NotBlank
     private LocalDateTime dateTime;
 
+    @Column(name = "description",nullable = false)
+    @NotBlank
     private String description;
 
+    @Column(name = "calories",nullable = false)
+    @NotBlank
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
     public Meal() {

@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -24,7 +25,7 @@ public class Meal extends AbstractBaseEntity {
     public static final String GET = "Meal.get";
     @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     @DateTimeFormat
-    @NotBlank
+   // @NotBlank
     private LocalDateTime dateTime;
 
     @Column(name = "description",nullable = false)
@@ -32,7 +33,7 @@ public class Meal extends AbstractBaseEntity {
     private String description;
 
     @Column(name = "calories",nullable = false)
-    @NotBlank
+    @NotNull
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)

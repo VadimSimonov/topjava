@@ -9,8 +9,6 @@ import ru.javawebinar.topjava.repository.MealRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +22,16 @@ public class JpaMealRepositoryImpl implements MealRepository {
     @Override
     @Transactional
     public Meal save(Meal meal, int userId) {
-        return null;
+        User ref = em.getReference(User.class, userId);
+        meal.setUser(ref);
+        if (meal.isNew())
+        {
+            em.persist(meal);
+        }else
+            if (ref==null || meal.getUser().getId()!=userId){
+            return null;
+            }
+        return em.merge(meal);
     }
 
     @Override
@@ -54,7 +61,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        String hql = "select m FROM Meal m WHERE m.user.id=:user_id ORDER BY m.dateTime desc ";
+        String hql = "select m FROM Meal m WHERE m.user.id=:user_id ORDER BY m.dateTime desc";
         return (List<Meal>) em.createQuery(hql)
                 .setParameter("user_id", userId)
                 .getResultList();
@@ -62,6 +69,13 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return null;
+        String hql = "select m FROM Meal m WHERE m.user.id=:user_id " +
+                "and m.dateTime BETWEEN :startDate  and :endDate ORDER BY m.dateTime DESC";
+        List<Meal> list = em.createQuery(hql)
+                .setParameter("user_id", userId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+        return list;
     }
 }

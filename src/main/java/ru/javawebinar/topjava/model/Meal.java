@@ -14,18 +14,11 @@ import java.time.LocalTime;
         uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id","date_time"},name = "meals_unique_user_datetime_idx")
 })
-
-@NamedQueries({
-        @NamedQuery(name = Meal.GET, query = "select m FROM Meal m WHERE m.id=:id and m.user.id=:user_id"),
-     //   @NamedQuery(name = Meal.BY_EMAIL, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
-   //     @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
-})
-
 public class Meal extends AbstractBaseEntity {
     public static final String GET = "Meal.get";
     @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default now()")
     @DateTimeFormat
-   // @NotBlank
+    @NotNull
     private LocalDateTime dateTime;
 
     @Column(name = "description",nullable = false)
@@ -37,7 +30,7 @@ public class Meal extends AbstractBaseEntity {
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",nullable = false)
+    //@JoinColumn(name = "user_id",nullable = false)
     private User user;
 
     public Meal() {

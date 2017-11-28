@@ -1,13 +1,16 @@
 package ru.javawebinar.topjava.repository.jpa;
 
+import com.sun.org.apache.xml.internal.security.signature.NodeFilter;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,10 +30,12 @@ public class JpaMealRepositoryImpl implements MealRepository {
         if (meal.isNew())
         {
             em.persist(meal);
-        }else
-            if (ref==null || meal.getUser().getId()!=userId){
-            return null;
+        }else {
+            Meal currentMeal = em.find(Meal.class, meal.getId());
+            if (ref == null || currentMeal.getUser().getId() != userId) {
+                return null;
             }
+        }
         return em.merge(meal);
     }
 
@@ -52,11 +57,16 @@ public class JpaMealRepositoryImpl implements MealRepository {
         Meal meal=new Meal();
         meal.setUser(ref);
         String hql = "select m FROM Meal m WHERE m.id=:id and m.user.id=:user_id";
-         meal= (Meal) em.createQuery(hql)
-                .setParameter("id", id)
-                .setParameter("user_id", userId)
-                .getSingleResult();
-        return meal;
+        try {
+            meal= (Meal) em.createQuery(hql)
+                    .setParameter("id", id)
+                    .setParameter("user_id", userId)
+                    .getSingleResult();
+        }catch (NoResultException e)
+        {
+            return null;
+        }
+         return meal;
     }
 
     @Override

@@ -189,6 +189,7 @@
             </dependencies>
         </profile>
         <profile>
+
             <id>hsqldb</id>
             <dependencies>
                 <dependency>

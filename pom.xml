@@ -189,7 +189,16 @@
             </dependencies>
         </profile>
         <profile>
-
+            <id>jpa</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                    <version>${hibernate.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>hsqldb</id>
             <dependencies>
                 <dependency>

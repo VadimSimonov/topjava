@@ -13,8 +13,6 @@
 
     <!--<context:component-scan base-package="ru.javawebinar.**.repository.jpa"/>-->
 
-    <context:component-scan base-package="ru.javawebinar.**.repository.datajpa"/>
-    <jpa:repositories base-package="ru.javawebinar.**.repository.datajpa"/>
 
     <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
         <jdbc:script location="classpath:db/${jdbc.initLocation}"/>
@@ -24,7 +22,6 @@
     <beans profile="hsqldb">
         <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
-        <!--no pooling-->
         <bean id="dataSource"
               class="org.springframework.jdbc.datasource.DriverManagerDataSource"
               p:driverClassName="org.hsqldb.jdbcDriver"
@@ -63,7 +60,7 @@
         </bean>
     </beans>
 
-    <beans profile="jpa">
+    <beans profile="jpa,datajpa">
         <bean id="dataSource"
               class="org.springframework.jdbc.datasource.DriverManagerDataSource">
             <property name="driverClassName" value="org.postgresql.Driver"/>
@@ -94,7 +91,12 @@
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
               p:entityManagerFactory-ref="entityManagerFactory"/>
     </beans>
-    <beans profile="datajpa">
+    <beans profile="jpa">
+        <context:component-scan base-package="ru.javawebinar.**.repository.jpa"/>
+    </beans>
 
+    <beans profile="datajpa">
+        <context:component-scan base-package="ru.javawebinar.**.repository.datajpa"/>
+        <jpa:repositories base-package="ru.javawebinar.**.repository.datajpa"/>
     </beans>
 </beans>

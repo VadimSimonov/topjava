@@ -179,26 +179,6 @@
 
     <profiles>
         <profile>
-            <id>jdbc</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-jdbc</artifactId>
-                    <version>${spring-jdbc.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>jpa</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-core</artifactId>
-                    <version>${hibernate.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
             <id>hsqldb</id>
             <dependencies>
                 <dependency>

@@ -32,5 +32,10 @@ public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     */
     List<Meal> findAllByUserIdAndDateTimeBetweenOrderByDateTimeDesc(int userId, LocalDateTime startDate, LocalDateTime endDate);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Meal m set m=:meal where m.user.id=:userId")
+    Meal update(@Param("meal") Meal meal,@Param("userId") int userId);
+
 
 }

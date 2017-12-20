@@ -61,6 +61,13 @@ public class MealController {
         return new ModelAndView("mealForm", "meal", user);
     }
 
+    @GetMapping("/meals/add")
+    public ModelAndView add()
+    {
+        String create = "create";
+        return new ModelAndView("mealForm","create",create);
+    }
+
     @PostMapping("/meals/save")
             public ModelAndView createAndUpdate(
                                                 @RequestParam (value = "id" , required = false) Integer id,
@@ -68,7 +75,6 @@ public class MealController {
                                                 @RequestParam (value = "description",required = false)String description,
                                                 @RequestParam (value = "calories",required = false)Integer calories)
     {
-
         if (id==null)
         {
             Meal meal = new Meal(localDateTime, description, calories);

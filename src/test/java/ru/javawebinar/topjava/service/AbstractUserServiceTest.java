@@ -85,7 +85,4 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         assertMatch(all, ADMIN, USER);
     }
 
-    /*
-    sdsd
-     */
 }

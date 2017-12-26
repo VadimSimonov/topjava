@@ -31,7 +31,7 @@ public class RootControllerTest extends AbstractControllerTest {
                                 mealis(MEAL6,true)
                   )));
     }
-//
+
     private Matcher mealis(Meal meal, boolean flag) {
         return allOf(
                 hasProperty("id", is(meal.getId())),

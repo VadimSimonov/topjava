@@ -3,7 +3,6 @@ package ru.javawebinar.topjava.web;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

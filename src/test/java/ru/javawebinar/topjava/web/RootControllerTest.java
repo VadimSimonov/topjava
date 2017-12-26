@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
@@ -14,19 +15,31 @@ import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class RootControllerTest extends AbstractControllerTest {
     @Test
-    public void meals() throws Exception {
+    public void testMeals() throws Exception {
         mockMvc.perform(get("/meals"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("meals"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
                 .andExpect(model().attribute("meals", hasSize(6)))
-                .andExpect(model().attribute("meals", hasItem(
-                        allOf(
-                                hasProperty("id", is(START_SEQ+2)),
-                                hasProperty("dateTime", is(MEAL1.getDateTime()))
-                        )
-                )));
+                .andExpect(model().attribute("meals", hasItems(
+                                mealis(MEAL1,false),
+                                mealis(MEAL2,false),
+                                mealis(MEAL3,false),
+                                mealis(MEAL4,true),
+                                mealis(MEAL5,true),
+                                mealis(MEAL6,true)
+                  )));
+    }
+
+    private Matcher mealis(Meal meal, boolean flag) {
+        return allOf(
+                hasProperty("id", is(meal.getId())),
+                hasProperty("dateTime", is(meal.getDateTime())),
+                hasProperty("description", is(meal.getDescription())),
+                hasProperty("calories", is(meal.getCalories())),
+                hasProperty("exceed", is(flag))
+        );
     }
 
     @Test

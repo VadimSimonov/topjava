@@ -2,9 +2,14 @@ package ru.javawebinar.topjava.web.meal;
 
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
+
+import javax.xml.ws.Response;
+import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -32,10 +37,15 @@ public class MealRestController extends AbstractMealController {
         return super.getAll();
     }
 
-    @Override
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Meal create(@RequestBody Meal meal) {
-        return super.create(meal);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Meal> createMeal(@RequestBody Meal meal) {
+        Meal created = super.create(meal);
+
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
     @Override

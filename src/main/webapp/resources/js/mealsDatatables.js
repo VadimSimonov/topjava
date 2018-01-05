@@ -2,15 +2,6 @@ var ajaxUrl = "ajax/meals/";
 var datatableApi;
 
 // $(document).ready(function () {
-$(document).ready(function() {
-    datatableApi = $("#datatable").DataTable({
-        $(".btn-slide").click(function () {
-        $("#panel").slideToggle("slow");
-        $(this).toggleClass("active");
-    });
-})
-    ;
-}
 $(function () {
     datatableApi = $("#datatable").DataTable({
         "paging": false,

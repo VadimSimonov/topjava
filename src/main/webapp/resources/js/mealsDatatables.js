@@ -42,7 +42,7 @@ function filter() {
         type: "GET",
         url: ajaxUrlFilter,
         data: form.serialize(),
-        success: function () {
+        success: function (data) {
             datatableApi.clear().rows.add(data).draw();
             successNoty("Filtered");
         }

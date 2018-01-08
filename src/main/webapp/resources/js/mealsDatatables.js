@@ -9,7 +9,7 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "data": "dataTime"
+                "data": "dateTime"
             },
             {
                 "data": "description"
@@ -35,3 +35,16 @@ $(function () {
     });
     makeEditable();
 });
+
+function filter() {
+    var form = $("#filterForm");
+    $.ajax({
+        type: "GET",
+        url: ajaxUrlFilter,
+        data: form.serialize(),
+        success: function () {
+            datatableApi.clear().rows.add(data).draw();
+            successNoty("Filtered");
+        }
+    });
+}

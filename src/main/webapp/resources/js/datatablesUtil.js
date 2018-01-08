@@ -21,19 +21,6 @@ function add() {
     $("#editRow").modal();
 }
 
-function filter() {
-    var form = $("#filterForm");
-    $.ajax({
-        type: "GET",
-        url: ajaxUrlFilter,
-        data: form.serialize(),
-        success: function () {
-            updateTable();
-            successNoty("Filtered");
-        }
-    });
-}
-
 function deleteRow(id) {
     $.ajax({
         url: ajaxUrl + id,

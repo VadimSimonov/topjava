@@ -30,7 +30,7 @@
                     <dt><spring:message code="meal.endTime"/>:</dt>
                     <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
                 </dl>
-                <a class="btn btn-primary" onclick="filter()">
+                <a class="btn btn-primary" id="filterButton">
                     <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
                     <spring:message code="meal.filter"/>
                 </a>

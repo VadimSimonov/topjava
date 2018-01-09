@@ -17,6 +17,11 @@ $(function () {
         });
     });
 
+    $('#filterClear').on('click', function() {
+        $("#filterForm")[0].reset();
+        updateTable();
+    });
+
     datatableApi = $("#datatable").DataTable({
         "paging": false,
         "info": true,

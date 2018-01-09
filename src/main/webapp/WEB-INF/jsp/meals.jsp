@@ -34,6 +34,10 @@
                     <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
                     <spring:message code="meal.filter"/>
                 </a>
+                <a class="btn btn-primary" id="filterClear">
+                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                    <spring:message code="meal.filterClear"/>
+                </a>
             </form>
 
             <br/>

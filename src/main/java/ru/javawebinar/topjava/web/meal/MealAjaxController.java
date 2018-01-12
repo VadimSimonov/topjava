@@ -1,15 +1,17 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.UtilsBinding;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class MealAjaxController extends AbstractMealController {
         super.delete(id);
     }
 
-    /*
+/*
     @PostMapping
     public void createOrUpdate(@RequestParam("id") Integer id,
                                @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
@@ -40,12 +42,20 @@ public class MealAjaxController extends AbstractMealController {
             super.create(meal);
         }
     }
-    */
+*/
+
+
     @PostMapping
-    public void createOrUpdate(MealTo mealTo) {
+    public ResponseEntity<String> createOrUpdate(@Valid MealTo mealTo, BindingResult result) {
+        if (result.hasErrors()) {
+            return UtilsBinding.checkBinding(result);
+        }
         if (mealTo.isNew()) {
             super.create(MealsUtil.createNewFromTo(mealTo));
+        } else {
+            super.update(MealsUtil.createNewFromTo(mealTo), mealTo.getId());
         }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

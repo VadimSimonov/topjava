@@ -1,30 +1,30 @@
 package ru.javawebinar.topjava.to;
 
-import org.hibernate.validator.constraints.Range;
-import ru.javawebinar.topjava.util.UserUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.javawebinar.topjava.model.AbstractBaseEntity;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class MealTo {
-    private Integer id;
+public class MealTo extends AbstractBaseEntity {
 
+   // private Integer id;
+    @NotNull
+   // @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime;
-
+    @NotBlank
     private String description;
-
+    @NotNull
     private int calories;
-
 
     public MealTo() {
     }
 
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories) {
-        this.id = id;
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;

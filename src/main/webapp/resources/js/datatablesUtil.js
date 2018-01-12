@@ -11,8 +11,9 @@ function makeEditable() {
 }
 
 function add() {
-    $("#modalTitle").html(i18n["addTitle"]);
-    form.find(":input").val("");
+  //  $("#modalTitle").html(i18n["addTitle"]);
+     $("#modalTitle").find(":input").val("");
+    //form.find(":input").val("");
     $("#editRow").modal();
 }
 

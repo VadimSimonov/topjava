@@ -95,15 +95,15 @@ function renderDeleteBtn(data, type, row) {
             "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
     }
 }
-formatdt = function (data) {
-            return data.replace('T', ' ').substr(0,16)
-    }
+function dataFormat(data) {
+    return data.replace('T', ' ').substr(0,16);
+}
 
+function frm(key, value) {
+if (key === "dateTime") {
+    return dataFormat(value);
+}
+return value;
+}
 
-frm = function (key, value) {
-            if (key === "dateTime") {
-                    return formatdt(value);
-                }
-            return value;
-    }
 

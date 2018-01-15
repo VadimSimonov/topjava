@@ -28,7 +28,7 @@ $(function () {
                                 , "render": function (data, type, row) {
                                 // debugger;
                                     if (type === "display") {
-                                        return formatdt(data);
+                                        return dataFormat(data);
                                     }
                                 return data;
                             }

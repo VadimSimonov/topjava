@@ -11,9 +11,9 @@ function makeEditable() {
 }
 
 function add() {
-  //  $("#modalTitle").html(i18n["addTitle"]);
-    $("#modalTitle").find(":input").val("");
- //   form.find(":input").val("");
+    $("#modalTitle").html(i18n["addTitle"]);
+ //   $("#modalTitle").find(":input").val("");
+    form.find(":input").val("");
     $("#editRow").modal();
 }
 
@@ -21,8 +21,8 @@ function updateRow(id) {
     $("#modalTitle").html(i18n["editTitle"]);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
-           // form.find("input[name='" + key + "']").val(frm(key, value));
-            $("#modalTitle").find("input[name='" + key + "']").val(value);
+            form.find("input[name='" + key + "']").val(frm(key, value));
+           // $("#modalTitle").find("input[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
     });
@@ -95,3 +95,15 @@ function renderDeleteBtn(data, type, row) {
             "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
     }
 }
+formatdt = function (data) {
+            return data.replace('T', ' ').substr(0,16)
+    }
+
+
+frm = function (key, value) {
+            if (key === "dateTime") {
+                    return formatdt(value);
+                }
+            return value;
+    }
+

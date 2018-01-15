@@ -23,14 +23,16 @@
                                         code="meal.startDate"/>:</label>
 
                                 <div class="col-sm-4">
-                                    <input class="form-control" type="date" name="startDate" id="startDate">
+                                  <!--  <input class="form-control" type="date" name="startDate" id="startDate"> -->
+                                    <input class="form-control" name="startDate" id="startDate" autocomplete="off">
                                 </div>
 
                                 <label class="control-label col-sm-3" for="startTime"><spring:message
                                         code="meal.startTime"/>:</label>
 
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="time" name="startTime" id="startTime">
+                                    <!--    <input class="form-control" type="time" name="startTime" id="startTime"> -->
+                                    <input class="form-control" name="startTime" id="startTime" autocomplete="off">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -38,14 +40,16 @@
                                         code="meal.endDate"/>:</label>
 
                                 <div class="col-sm-4">
-                                    <input class="form-control" type="date" name="endDate" id="endDate">
+                                    <!-- <input class="form-control" type="date" name="endDate" id="endDate"> -->
+                                    <input class="form-control" name="endDate" id="endDate" autocomplete="off">
                                 </div>
 
                                 <label class="control-label col-sm-3" for="endTime"><spring:message
                                         code="meal.endTime"/>:</label>
 
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="time" name="endTime" id="endTime">
+                                    <!-- <input class="form-control" type="time" name="endTime" id="endTime"> -->
+                                    <input class="form-control"  name="endTime" id="endTime" autocomplete="off">
                                 </div>
                             </div>
                         </form>
@@ -75,26 +79,6 @@
                 <th></th>
             </tr>
             </thead>
-            <c:forEach items="${meals}" var="meal">
-                <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
-                <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
-                    <td>
-                            <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
-                            <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
-                            <%--${fn:replace(meal.dateTime, 'T', ' ')}--%>
-                            ${fn:formatDateTime(meal.dateTime)}
-                    </td>
-                    <td>${meal.description}</td>
-                    <td>${meal.calories}</td>
-                    <td><a>
-                    <td><a onclick="updateRow(${meal.id})">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a></td>
-                    <td><a onclick="deleteRow(${meal.id})">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </a></td>
-                </tr>
-            </c:forEach>
         </table>
     </div>
 </div>

@@ -18,9 +18,20 @@ $(function () {
     datatableApi = $("#datatable").DataTable({
         "paging": false,
         "info": true,
+                "ajax": {
+                    "url": ajaxUrl,
+                        "dataSrc": ""
+                },
         "columns": [
             {
                 "data": "dateTime"
+                                , "render": function (data, type, row) {
+                                // debugger;
+                                    if (type === "display") {
+                                        return formatdt(data);
+                                    }
+                                return data;
+                            }
             },
             {
                 "data": "description"
@@ -30,11 +41,13 @@ $(function () {
             },
             {
                 "defaultContent": "Edit",
-                "orderable": false
+                "orderable": false,
+                "render": renderEditBtn
             },
             {
                 "defaultContent": "Delete",
-                "orderable": false
+                "orderable": false,
+                "render": renderDeleteBtn
             }
         ],
         "order": [
@@ -43,6 +56,10 @@ $(function () {
                 "desc"
             ]
         ]
+        , "createdRow": function (row, data, dataIndex) {
+            $(row).addClass(data.exceed ? "exceeded" : "normal")
+        }
+        , "initComplete": makeEditable
     });
-    makeEditable();
-});
+
+    });

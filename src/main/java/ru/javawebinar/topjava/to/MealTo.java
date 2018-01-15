@@ -1,9 +1,11 @@
 package ru.javawebinar.topjava.to;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.javawebinar.topjava.model.AbstractBaseEntity;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,12 +14,12 @@ public class MealTo extends AbstractBaseEntity {
 
    // private Integer id;
     @NotNull
-   // @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime dateTime;
-    @NotBlank
+    @NotEmpty
     private String description;
     @NotNull
+    @Range(min = 10, max = 5000)
     private int calories;
 
     public MealTo() {

@@ -32,6 +32,11 @@ public class ExceptionInfoHandler {
     @ResponseStatus(value = HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
+        Throwable err = ValidationUtil.getRootCause(e);
+        if (err!=null)
+        {
+            return new ErrorInfo(req.getRequestURL(),ErrorType.DATA_ERROR,HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase());
+        }
         return logAndGetErrorInfo(req, e, true, ErrorType.DATA_ERROR);
     }
 
